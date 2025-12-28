@@ -113,9 +113,18 @@
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
         <!-- Imagen de fondo con overlay oscuro -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=800&auto=format&fit=crop" alt="Boda Fondo" class="w-full h-full object-cover filter grayscale brightness-50">
+            <!-- 
+                MODIFICACIÓN: He cambiado brightness-50 por brightness-[0.35] para bajar el brillo.
+                También puedes usar brightness-0 si quieres negro total o brightness-[0.2] para algo muy oscuro.
+            -->
+            <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" 
+                 alt="Boda Principal" 
+                 class="w-full h-full object-cover filter grayscale brightness-[0.35]">
+            
+            <!-- Overlay adicional para oscurecer y dar contraste al texto -->
+            <div class="absolute inset-0 bg-black/40"></div>
         </div>
-
+        
         <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto fade-in-section is-visible">
             <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-4">Fotografía y Filmación de Bodas</p>
             <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 leading-tight">Collecionando <br> <span class="italic font-light">momentos únicos</span></h1>
