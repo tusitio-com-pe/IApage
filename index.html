@@ -511,62 +511,83 @@
         </div>
     </div>
 
-    <script>
-              // Funciones del Widget de WhatsApp
-        const chatWindow = document.getElementById('chat-window');
-        const chatInput = document.getElementById('chat-input');
-        
-        function toggleChat() {
-            chatWindow.classList.toggle('open');
-            if (chatWindow.classList.contains('open')) {
-                setTimeout(() => chatInput.focus(), 300);
-            }
-        }
+     <script>
 
-        function sendToWhatsApp() {
-            const message = chatInput.value.trim();
-            const phoneNumber = "50212345678"; // CAMBIA ESTO POR TU NÚMERO
+        // Todo el código dentro de DOMContentLoaded para asegurar que el HTML esté listo
+        document.addEventListener('DOMContentLoaded', () => {
             
-            if (message !== "") {
-                const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-                window.open(url, '_blank');
-                chatInput.value = "";
-                toggleChat();
-            }
-        }
-
-        // Permitir Enviar con tecla Enter
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendToWhatsApp();
-        });
-
-        // Scroll Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    const img = entry.target.querySelector('.gallery-item');
-                    if (img) img.classList.add('active-color');
+            // --- FUNCIONES DEL WIDGET DE WHATSAPP ---
+            const chatWindow = document.getElementById('chat-window');
+            const chatInput = document.getElementById('chat-input');
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+            const closeChatBtn = document.getElementById('close-chat');
+            const sendBtn = document.getElementById('send-btn');
+            
+            // Alternar ventana de chat
+            const toggleChat = () => {
+                chatWindow.classList.toggle('open');
+                if (chatWindow.classList.contains('open')) {
+                    chatInput.focus();
                 }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
+            };
 
-        // Lightbox
-        const lb = document.getElementById('lightbox');
-        const lbImg = document.getElementById('lightbox-img');
-        document.querySelectorAll('.gallery-item').forEach(img => {
-            img.addEventListener('click', () => {
-                const url = img.getAttribute('data-fullres');
-                lb.classList.add('open');
-                lbImg.src = url;
-                setTimeout(() => {
-                    lbImg.classList.replace('opacity-0', 'opacity-100');
-                    lbImg.classList.replace('scale-95', 'scale-100');
-                }, 50);
+            // Enviar mensaje a WhatsApp
+            const sendToWhatsApp = () => {
+                const message = chatInput.value.trim();
+                const phoneNumber = "50212345678"; // TU NÚMERO AQUÍ
+                
+                if (message !== "") {
+                    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(url, '_blank');
+                    chatInput.value = "";
+                    toggleChat();
+                }
+            };
+
+            // Event Listeners para el Chat
+            if(whatsappBtn) whatsappBtn.addEventListener('click', toggleChat);
+            if(closeChatBtn) closeChatBtn.addEventListener('click', toggleChat);
+            if(sendBtn) sendBtn.addEventListener('click', sendToWhatsApp);
+
+            // Enviar con Enter
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendToWhatsApp();
             });
+
+            // --- ANIMACIÓN DE SECCIONES (SCROLL OBSERVER) ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        const img = entry.target.querySelector('.gallery-item');
+                        if (img) img.classList.add('active-color');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
+
+            // --- LIGHTBOX ---
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            
+            document.querySelectorAll('.gallery-item').forEach(img => {
+                img.addEventListener('click', () => {
+                    const url = img.getAttribute('data-fullres');
+                    lb.classList.add('open');
+                    lbImg.src = url;
+                    setTimeout(() => {
+                        lbImg.classList.replace('opacity-0', 'opacity-100');
+                        lbImg.classList.replace('scale-95', 'scale-100');
+                    }, 50);
+                });
+            });
+
+            window.closeLightbox = () => { 
+                lb.classList.remove('open'); 
+                lbImg.classList.add('opacity-0', 'scale-95'); 
+            };
         });
-        function closeLightbox() { lb.classList.remove('open'); lbImg.classList.add('opacity-0', 'scale-95'); }
     </script>
 </body>
 </html>
