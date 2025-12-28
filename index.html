@@ -511,6 +511,34 @@
     </div>
 
     <script>
+        // Funciones del Widget de WhatsApp
+        const chatWindow = document.getElementById('chat-window');
+        const chatInput = document.getElementById('chat-input');
+        
+        function toggleChat() {
+            chatWindow.classList.toggle('open');
+            if (chatWindow.classList.contains('open')) {
+                setTimeout(() => chatInput.focus(), 300);
+            }
+        }
+
+        function sendToWhatsApp() {
+            const message = chatInput.value.trim();
+            const phoneNumber = "50212345678"; // CAMBIA ESTO POR TU NÚMERO
+            
+            if (message !== "") {
+                const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+                chatInput.value = "";
+                toggleChat();
+            }
+        }
+
+        // Permitir Enviar con tecla Enter
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendToWhatsApp();
+        });
+        
         // Lógica del Menú Móvil
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
