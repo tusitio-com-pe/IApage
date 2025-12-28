@@ -389,6 +389,34 @@
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
         });
+        
+        // Animación al hacer scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Activa la animación de entrada
+                    entry.target.classList.add('is-visible');
+                    
+                    // Si el elemento contiene una imagen de galería, actívale el color
+                    const galleryImg = entry.target.querySelector('.gallery-item');
+                    if (galleryImg) {
+                        galleryImg.classList.add('active-color');
+                    }
+                    
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
 
         // Navbar cambia de estilo al hacer scroll
         const navbar = document.getElementById('navbar');
