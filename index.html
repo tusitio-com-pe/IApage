@@ -78,6 +78,16 @@
             outline: none;
             border-bottom: 1px solid #000;
         }
+        /* Estilos para el visor de imágenes (Lightbox) */
+        #lightbox {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #lightbox.open {
+            display: flex;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -170,62 +180,62 @@
                 
                 <!-- Foto 1 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/1.webp" alt="Novia Detalle" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/1.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 2 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/2.webp" alt="Fiesta Boda" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/2.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 3 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/3.webp" alt="Pareja Ciudad" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/3.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 4 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/4.webp" alt="Anillos Manos" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/4.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 5 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/5.webp" alt="Beso Atardecer" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/5.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 6 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/6.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/6.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 7 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/7.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/7.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 8 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/8.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/8.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 9 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/9.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/9.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 10 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/10.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/10.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 11 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/11.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/11.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
                 <!-- Foto 12 -->
                 <div class="relative h-[500px] overflow-hidden group fade-in-section">
-                    <img src="images/12.webp" alt="Velo Novia" class="w-full h-full object-cover gallery-item cursor-pointer">
+                    <img src="images/12.webp" data-fullres="https://drive.google.com/file/d/1uR4E-hgiTtGmDZExr_QqmXNYXvcTYTlP/preview" class="w-full h-full object-cover gallery-item cursor-pointer">
                 </div>
 
 
@@ -429,6 +439,41 @@
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
         });
+        
+        // Funcionalidad de Lightbox (Visor de fotos)
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxLoader = document.getElementById('lightbox-loader');
+
+        document.querySelectorAll('.gallery-item').forEach(img => {
+            img.addEventListener('click', () => {
+                const fullResUrl = img.getAttribute('data-fullres');
+                if (!fullResUrl) return;
+
+                // Reset y abrir
+                lightboxImg.src = '';
+                lightboxImg.classList.add('opacity-0', 'scale-95');
+                lightboxLoader.style.display = 'flex';
+                lightbox.classList.add('open');
+                
+                // Cargar imagen de alta resolución
+                const newImg = new Image();
+                newImg.onload = () => {
+                    lightboxImg.src = fullResUrl;
+                    lightboxImg.classList.remove('opacity-0', 'scale-95');
+                    lightboxImg.classList.add('opacity-100', 'scale-100');
+                    lightboxLoader.style.display = 'none';
+                };
+                newImg.src = fullResUrl;
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+            setTimeout(() => {
+                lightboxImg.src = '';
+            }, 300);
+        }
 
         // Navbar cambia de estilo al hacer scroll
         const navbar = document.getElementById('navbar');
