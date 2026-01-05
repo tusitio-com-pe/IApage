@@ -530,6 +530,21 @@
         // Todo el código dentro de DOMContentLoaded para asegurar que el HTML esté listo
         document.addEventListener('DOMContentLoaded', () => {
             
+            // Mobile Menu Logic
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-menu-btn');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            const toggleMenu = () => {
+                mobileMenu.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            };
+
+            mobileBtn.addEventListener('click', toggleMenu);
+            closeBtn.addEventListener('click', toggleMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
             // --- FUNCIONES DEL WIDGET DE WHATSAPP ---
             const chatWindow = document.getElementById('chat-window');
             const chatInput = document.getElementById('chat-input');
