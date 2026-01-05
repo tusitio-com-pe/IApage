@@ -113,6 +113,21 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+        /* Menú móvil */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .bg-fixed-custom {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
 </head>
 <body class="antialiased">
