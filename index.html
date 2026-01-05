@@ -621,23 +621,69 @@
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
 
-            // Lightbox
+            // Lightbox con Navegación
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
-            document.querySelectorAll('.gallery-item').forEach(img => {
-                img.addEventListener('click', () => {
-                    const url = img.getAttribute('data-fullres');
-                    if (!url) return;
-                    lb.classList.add('open');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            // Obtenemos todas las imágenes que tienen data-fullres (nuestra galería)
+            const allImages = Array.from(document.querySelectorAll('img[data-fullres]'));
+            let currentIndex = 0;
+
+            const updateLightboxImage = (index) => {
+                const img = allImages[index];
+                const url = img.getAttribute('data-fullres');
+                
+                // Efecto de transición suave al cambiar
+                lbImg.classList.add('opacity-0', 'scale-95');
+                
+                setTimeout(() => {
                     lbImg.src = url;
-                    setTimeout(() => { 
-                        lbImg.classList.replace('opacity-0', 'opacity-100'); 
-                        lbImg.classList.replace('scale-95', 'scale-100'); 
-                    }, 50);
+                    lbImg.onload = () => {
+                        lbImg.classList.replace('opacity-0', 'opacity-100');
+                        lbImg.classList.replace('scale-95', 'scale-100');
+                    };
+                }, 200);
+                
+                currentIndex = index;
+            };
+
+            allImages.forEach((img, index) => {
+                img.addEventListener('click', () => {
+                    currentIndex = index;
+                    lb.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                    updateLightboxImage(currentIndex);
                 });
             });
+
+            const nextImage = (e) => {
+                if(e) e.stopPropagation();
+                currentIndex = (currentIndex + 1) % allImages.length;
+                updateLightboxImage(currentIndex);
+            };
+
+            const prevImage = (e) => {
+                if(e) e.stopPropagation();
+                currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+                updateLightboxImage(currentIndex);
+            };
+
+            nextBtn.addEventListener('click', nextImage);
+            prevBtn.addEventListener('click', prevImage);
+
+            // Teclado
+            document.addEventListener('keydown', (e) => {
+                if (!lb.classList.contains('open')) return;
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'Escape') closeLightbox();
+            });
+
             window.closeLightbox = () => { 
                 lb.classList.remove('open'); 
+                document.body.style.overflow = '';
                 lbImg.classList.add('opacity-0', 'scale-95'); 
             };
         });
