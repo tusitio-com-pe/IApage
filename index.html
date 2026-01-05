@@ -58,12 +58,15 @@
         
         .fade-in-section.is-visible { opacity: 1; transform: none; }
 
+        /* Estilo base de la galería: Blanco y negro */
         .gallery-item {
             filter: grayscale(100%);
-            transition: filter 1.2s ease-in-out, transform 0.5s ease-out;
+            transition: filter 0.8s ease-in-out, transform 0.5s ease-out;
         }
         
-        .gallery-item.active-color { filter: grayscale(0%); }
+        /* Clase que activa el color cuando está en el centro */
+        .gallery-item.focused { filter: grayscale(0%); }
+        
         .gallery-item:hover { transform: scale(1.02); z-index: 10; }
 
         .divider-line {
