@@ -181,17 +181,9 @@
 
     <!-- Hero Section -->
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Imagen de fondo con overlay oscuro -->
         <div class="absolute inset-0 z-0">
-            <!-- 
-                MODIFICACIÓN: He cambiado brightness-50 por brightness-[0.35] para bajar el brillo.
-                También puedes usar brightness-0 si quieres negro total o brightness-[0.2] para algo muy oscuro.
-            -->
-            <img src="/images/hero.webp" alt="Novia Detalle" class="w-full h-full object-cover gallery-item cursor-pointer" 
-                 class="w-full h-full object-cover filter grayscale brightness-[0.2]">
-            
-            <!-- Overlay adicional para oscurecer y dar contraste al texto -->
-            <div class="absolute inset-0 bg-black/60"></div>
+            <img src="/images/hero.webp" alt="Novia Detalle" class="w-full h-full object-cover filter grayscale brightness-[0.35]">
+            <div class="absolute inset-0 bg-black/20"></div>
         </div>
         
         <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto fade-in-section is-visible">
