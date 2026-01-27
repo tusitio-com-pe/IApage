@@ -182,7 +182,11 @@
     <!-- Hero Section -->
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="/images/hero.webp" alt="Novia Detalle" class="w-full h-full object-cover filter grayscale brightness-[0.35]">
+            <picture>
+                <source srcset="images/low/hero.webp" type="image/webp" media="(max-width: 600px)">
+                <img src="images/hero.webp" 
+                alt="Novia Detalle" class="w-full h-full object-cover filter grayscale brightness-[0.35]">
+            </picture>
             <div class="absolute inset-0 bg-black/20"></div>
         </div>
         
