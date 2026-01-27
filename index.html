@@ -198,12 +198,10 @@
         </div>
     </header>
 
-    <!-- Sección Filosofía con Imagen Lateral -->
+    <!-- Sección Filosofía -->
     <section id="filosofia" class="py-24 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-24">
-                
-                <!-- Columna de Texto -->
                 <div class="w-full md:w-1/2 fade-in-section text-left">
                     <div class="divider-line"></div>
                     <span class="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 block">El Enfoque</span>
@@ -212,25 +210,25 @@
                         El día de tu boda pasa volando, pero las imágenes permanecen. Mi enfoque es documental, y no solamente artístico. 
                     </p>
                     <p class="font-light text-gray-600 leading-relaxed text-lg mb-10">
-                        Creo imágenes en gran calidad que, dentro de 50 años, te harán sentir exactamente lo mismo que sentiste en ese instante. No guardo fotos, capturo momentos innolvidables.
+                        Creo imágenes en gran calidad que, dentro de 50 años, te harán sentir exactamente lo mismo que sentiste en ese instante.
                     </p>
                     <div class="flex items-center space-x-4">
                         <div class="w-10 h-[1px] bg-charcoal"></div>
                         <span class="font-serif italic text-xl text-charcoal">Efraín Balceda</span>
                     </div>
                 </div>
-                
-                <!-- Columna de Imagen -->
                 <div class="w-full md:w-1/2 fade-in-section">
                     <div class="relative group">
-                        <!-- Imagen decorativa de la sección Filosofía -->
+                        <!-- IMAGEN DEL FOTÓGRAFO AJUSTADA: 
+                             - aspect-square: Cuadrada en móvil
+                             - object-top: Se ancla arriba (para que se vea la cabeza)
+                             - md:aspect-auto md:h-[600px]: Vuelve a vertical en desktop
+                        -->
                         <img src="images/fotografo-1.jpg" 
                              alt="El Fotógrafo trabajando" 
-                             class="w-full h-[600px] object-cover shadow-2xl gallery-item active-color grayscale-0">
-                        <div class="absolute -bottom-6 -right-6 w-32 h-32 border-r border-b border-charcoal/20 hidden lg:block"></div>
+                             class="w-full h-auto aspect-square md:aspect-auto md:h-[600px] object-cover object-top shadow-2xl gallery-item active-color grayscale-0">
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
