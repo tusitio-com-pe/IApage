@@ -96,7 +96,7 @@
         }
 
         .image-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
         }
 
         #lightbox {
@@ -113,6 +113,32 @@
         .whatsapp-float-btn {
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
+
+        /* Tooltip de copiado */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 12px;
+            position: fixed;
+            z-index: 200;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body class="antialiased font-sans">
@@ -158,6 +184,9 @@
         </div>
     </footer>
 
+    <!-- Toast de Notificación -->
+    <div id="toast">Enlace copiado al portapapeles</div>
+
     <!-- WhatsApp -->
     <div class="fixed bottom-8 right-8 z-[60]">
         <a href="https://wa.me/51955073778" target="_blank" class="whatsapp-float-btn bg-[#25D366] text-white p-4 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
@@ -166,23 +195,36 @@
     </div>
 
     <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <button id="prev-btn" onclick="prevImg(event)" class="absolute left-4 text-white/40 hover:text-white p-4">
+    <div id="lightbox">
+        <!-- Controles Superiores -->
+        <div class="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-[110]">
+            <div class="flex space-x-4">
+                <button id="lb-download" class="text-white/70 hover:text-white transition-colors bg-white/10 p-2 rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                </button>
+                <button id="lb-share" class="text-white/70 hover:text-white transition-colors bg-white/10 p-2 rounded-full">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                </button>
+            </div>
+            <button onclick="closeLightbox()" class="text-white/70 hover:text-white transition-colors p-2 bg-white/10 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <button id="prev-btn" onclick="prevImg(event)" class="absolute left-4 text-white/40 hover:text-white p-4 z-[110]">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button id="next-btn" onclick="nextImg(event)" class="absolute right-4 text-white/40 hover:text-white p-4">
+        <button id="next-btn" onclick="nextImg(event)" class="absolute right-4 text-white/40 hover:text-white p-4 z-[110]">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <div class="max-w-7xl max-h-[90vh] p-4">
-            <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl">
+        
+        <div class="max-w-7xl max-h-[90vh] p-4 flex items-center justify-center" onclick="event.target === this && closeLightbox()">
+            <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl transition-opacity duration-300">
         </div>
     </div>
 
     <script>
-        // CONFIGURACIÓN (Verifica que R2_URL sea accesible)
+        // CONFIGURACIÓN R2
         const R2_URL = "https://cdn.tusitio.com.pe"; 
         const CLIENTE_PATH = "bodas/2026/gilson"; 
 
@@ -200,7 +242,6 @@
         const allImagesData = [];
         let currentIndex = 0;
 
-        // Iniciar carga
         window.onload = () => {
             renderGallery();
             setupObservers();
@@ -223,12 +264,23 @@
                     const url = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${section.prefix}${i}.jpg`;
                     allImagesData.push(url);
                     photosHtml += `
-                        <div class="grid-item group" onclick="openLightbox('${url}')">
+                        <div class="grid-item group">
                             <img src="${url}" 
                                  loading="lazy" 
                                  onload="onImgLoad(this)" 
-                                 onerror="this.parentElement.style.display='none'">
-                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                 onerror="this.parentElement.style.display='none'"
+                                 onclick="openLightbox('${url}')">
+                            
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex flex-col justify-end p-4">
+                                <div class="flex justify-between items-center pointer-events-auto">
+                                    <button onclick="downloadImage('${url}')" class="text-white/90 hover:text-white p-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    </button>
+                                    <button onclick="shareImage('${url}')" class="text-white/90 hover:text-white p-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     `;
                 }
@@ -247,7 +299,6 @@
             });
         }
 
-        // Lógica de orientación e imagen cargada
         function onImgLoad(img) {
             img.classList.add('loaded');
             if (img.naturalWidth > img.naturalHeight) {
@@ -255,14 +306,64 @@
             }
         }
 
-        // Lightbox
+        // --- FUNCIONES CORE ---
+
+        async function downloadImage(url) {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = blobUrl;
+                a.download = url.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (error) {
+                window.open(url, '_blank');
+            }
+        }
+
+        function shareImage(url) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Boda Gilson & Ana',
+                    text: 'Mira esta foto de la galería',
+                    url: url
+                }).catch(() => copyToClipboard(url));
+            } else {
+                copyToClipboard(url);
+            }
+        }
+
+        function copyToClipboard(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // --- LIGHTBOX ---
+
         function openLightbox(src) {
             currentIndex = allImagesData.indexOf(src);
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
+            
             lbImg.src = src;
             lb.classList.add('open');
             document.body.style.overflow = 'hidden';
+
+            // Vincular botones del lightbox
+            document.getElementById('lb-download').onclick = () => downloadImage(allImagesData[currentIndex]);
+            document.getElementById('lb-share').onclick = () => shareImage(allImagesData[currentIndex]);
         }
 
         function closeLightbox() {
@@ -273,27 +374,33 @@
         function nextImg(e) {
             e.stopPropagation();
             currentIndex = (currentIndex + 1) % allImagesData.length;
-            document.getElementById('lightbox-img').src = allImagesData[currentIndex];
+            updateLightboxContent();
         }
 
         function prevImg(e) {
             e.stopPropagation();
             currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length;
-            document.getElementById('lightbox-img').src = allImagesData[currentIndex];
+            updateLightboxContent();
         }
 
-        // Animaciones
+        function updateLightboxContent() {
+            const lbImg = document.getElementById('lightbox-img');
+            lbImg.style.opacity = '0';
+            setTimeout(() => {
+                lbImg.src = allImagesData[currentIndex];
+                lbImg.style.opacity = '1';
+            }, 100);
+        }
+
         function setupObservers() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('is-visible');
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
         }
 
-        // Teclado para lightbox
         document.addEventListener('keydown', (e) => {
             if (!document.getElementById('lightbox').classList.contains('open')) return;
             if (e.key === "ArrowRight") nextImg(e);
