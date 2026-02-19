@@ -47,49 +47,46 @@
         
         .fade-in-section.is-visible { opacity: 1; transform: none; }
 
-        /* DISEÑO HORIZONTAL MEJORADO PARA EVITAR DEFORMACIÓN */
-        .horizontal-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+        /* REJILLA ESTILO INSTAGRAM / SEMI-VERTICAL */
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
+            gap: 8px;
+            grid-auto-flow: dense; /* Rellena huecos si una foto ocupa 2 espacios */
         }
 
-        .horizontal-item {
-            height: 320px; /* Altura fija para mantener la consistencia de la fila */
-            flex: 1 1 auto; /* Permite crecer pero mantiene base automática */
+        /* En móviles pasamos a 2 columnas para que no se vea muy pequeño */
+        @media (max-width: 768px) {
+            .instagram-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+            }
+        }
+
+        .grid-item {
             position: relative;
+            aspect-ratio: 3 / 4; /* Proporción semi-vertical estándar */
             overflow: hidden;
             background-color: #f3f3f3;
         }
 
-        /* En móviles, ajustamos la altura */
-        @media (max-width: 640px) {
-            .horizontal-item {
-                height: 220px;
-                flex: 1 1 45%; /* Dos columnas aproximadas en móvil */
-            }
+        /* Clase para fotos horizontales: ocupan 2 columnas */
+        .grid-item.is-horizontal {
+            grid-column: span 2;
+            aspect-ratio: 3 / 2; /* Proporción horizontal equilibrada */
         }
 
-        .horizontal-item img {
+        .grid-item img {
             width: 100%;
             height: 100%;
-            /* 'cover' asegura que no se deforme (no se estire), 
-               sino que se recorte sutilmente si el contenedor cambia de forma */
-            object-fit: cover; 
-            object-position: center;
+            object-fit: cover;
             cursor: zoom-in;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             display: block;
         }
 
-        /* Evita que la última fila se estire de forma desproporcionada */
-        .horizontal-grid::after {
-            content: "";
-            flex-grow: 10;
-        }
-
         .image-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
         }
 
         #lightbox {
@@ -108,7 +105,7 @@
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased font-sans">
 
     <!-- Navegación -->
     <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm transition-all duration-300 border-b border-gray-100" id="navbar">
@@ -116,60 +113,62 @@
             <a href="../../index.html" class="font-serif text-2xl tracking-[0.2em] font-bold uppercase">Efraín</a>
             <div class="hidden md:flex items-center space-x-8 text-[11px] tracking-[0.2em] uppercase font-light">
                 <a href="../../index.html#portfolio" class="hover:text-gray-400 transition-colors">Portafolio</a>
-                <a href="../../index.html#contacto" class="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-all duration-300">Reserva ahora</a>
+                <a href="../../index.html#contacto" class="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-all duration-300 font-medium">Reserva ahora</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg" src="" class="w-full h-full object-cover filter grayscale brightness-[0.35]">
-            <div class="absolute inset-0 bg-black/40"></div>
+            <img id="hero-bg" src="" class="w-full h-full object-cover filter grayscale brightness-[0.4]">
+            <div class="absolute inset-0 bg-black/20"></div>
         </div>
         
         <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto fade-in-section is-visible">
-            <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-4">Álbum Virtual de Fotos</p>
-            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 leading-tight"></h1>
-            <p id="wedding-date" class="font-light text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-200"></p>
-            <a href="#galeria-inicio" class="inline-block border border-white px-8 py-4 text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">
-                Ver Álbum
+            <p class="text-[10px] md:text-xs tracking-[0.4em] uppercase mb-4 font-bold">Galería Privada</p>
+            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl mb-6 leading-tight"></h1>
+            <p id="wedding-date" class="font-light text-base md:text-lg mb-10 tracking-[0.1em] text-gray-300"></p>
+            <a href="#galeria-inicio" class="inline-block border border-white/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-300">
+                Explorar Álbum
             </a>
         </div>
     </header>
 
     <!-- Contenedor Principal -->
-    <div id="galeria-inicio" class="bg-off-white pb-24">
-        <div id="gallery-wrapper" class="max-w-[1600px] mx-auto px-4"></div>
-    </div>
+    <main id="galeria-inicio" class="bg-white pb-24">
+        <div id="gallery-wrapper" class="max-w-[1400px] mx-auto px-4 md:px-6"></div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-charcoal text-white py-12">
+    <footer class="bg-charcoal text-white py-16">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <h4 class="font-serif text-2xl tracking-wider mb-8">Efraín Balceda</h4>
-            <p class="text-[10px] text-gray-500 uppercase tracking-widest">© 2026 Efraín Balceda — Lima, Perú</p>
+            <p class="font-serif text-xl tracking-widest mb-4 italic">Efraín Balceda</p>
+            <p class="text-[9px] text-gray-500 uppercase tracking-[0.4em]">Capturando momentos inolvidables</p>
+            <div class="h-px w-12 bg-gray-800 mx-auto my-8"></div>
+            <p class="text-[9px] text-gray-600 uppercase tracking-widest">© 2026 Lima, Perú</p>
         </div>
     </footer>
 
     <!-- WhatsApp Widget -->
     <div id="whatsapp-widget" class="fixed bottom-8 right-8 z-[60]">
-        <button onclick="window.open('https://wa.me/51955073778', '_blank')" class="whatsapp-float-btn bg-black text-white p-4 rounded-full shadow-2xl hover:bg-gray-800 transition-all duration-300 flex items-center justify-center relative">
-            <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <button onclick="window.open('https://wa.me/51955073778', '_blank')" class="whatsapp-float-btn bg-black text-white p-4 rounded-full shadow-2xl hover:bg-gray-800 transition-all duration-300 flex items-center justify-center">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </button>
     </div>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 z-[70] bg-black/95 items-center justify-center p-4">
+    <div id="lightbox" class="fixed inset-0 z-[70] bg-black/98 items-center justify-center p-2 md:p-10">
         <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white z-[80] transition-colors p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <button id="prev-btn" class="absolute left-4 md:left-8 text-white/50 hover:text-white z-[80] transition-all p-4">
+        <button id="prev-btn" class="absolute left-2 md:left-8 text-white/40 hover:text-white z-[80] transition-all p-4">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button id="next-btn" class="absolute right-4 md:right-8 text-white/50 hover:text-white z-[80] transition-all p-4">
+        <button id="next-btn" class="absolute right-2 md:right-8 text-white/40 hover:text-white z-[80] transition-all p-4">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <div class="relative w-full h-full flex items-center justify-center cursor-zoom-out" onclick="event.target === this && closeLightbox()">
+        <div class="relative w-full h-full flex items-center justify-center" onclick="event.target === this && closeLightbox()">
             <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain transition-all duration-300 scale-95 opacity-0">
         </div>
     </div>
@@ -178,13 +177,12 @@
         // ============================================================
         //  1. CONFIGURACIÓN R2
         // ============================================================
-        
         const R2_URL = "https://cdn.tusitio.com.pe"; 
         const CLIENTE_PATH = "bodas/2026/gilson"; 
 
         const weddingConfig = {
             names: "Gilson & Ana",
-            date: "2026",
+            date: "Celebración 2026",
             coverImage: `${R2_URL}/${CLIENTE_PATH}/portada.jpg`,
             sections: [
                 {
@@ -196,14 +194,14 @@
                 },
                 {
                     id: "sesion",
-                    title: "Sesión: Paseo Nupcial",
+                    title: "Sesión Nupcial",
                     photoPrefix: "gilson-sesion-",
                     count: 19,
                     format: "jpg"
                 },
                 {
                     id: "recepcion",
-                    title: "Recepción y Fiesta",
+                    title: "Fiesta y Recepción",
                     photoPrefix: "gilson-recepcion-",
                     count: 384,
                     format: "jpg"
@@ -212,9 +210,8 @@
         };
 
         // ==========================================
-        //  2. LÓGICA DE CARGA
+        //  2. LÓGICA DE CARGA Y RENDERIZADO
         // ==========================================
-        
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('couple-name').innerText = weddingConfig.names;
             document.getElementById('wedding-date').innerText = weddingConfig.date;
@@ -228,39 +225,26 @@
                 
                 const sectionHtml = `
                     <div id="${section.id}" class="pt-24 fade-in-section">
-                        <div class="flex justify-between items-end mb-12 border-b border-gray-200 pb-4">
-                            <div>
-                                <span class="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">Sección</span>
-                                <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-2">${section.title}</h2>
-                                <p class="text-[10px] text-gray-400 uppercase mt-1">${section.count} fotografías</p>
-                            </div>
-                            <div class="flex space-x-4">
-                                <button onclick="shareSection('${section.id}')" class="text-[10px] uppercase tracking-widest hover:text-gray-500 transition-colors border border-gray-300 px-4 py-2">
-                                    Compartir Sección
-                                </button>
-                            </div>
+                        <div class="mb-10 text-center">
+                            <h2 class="font-serif text-3xl text-charcoal tracking-wide">${section.title}</h2>
+                            <div class="h-0.5 w-10 bg-black/10 mx-auto mt-4 mb-2"></div>
+                            <p class="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-bold">${section.count} capturas</p>
                         </div>
                         
-                        <div class="horizontal-grid">
+                        <div class="instagram-grid" id="grid-${section.id}">
                             ${sectionPhotos.map(photoName => {
                                 const fullPath = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${photoName}`;
                                 allImagesData.push(fullPath);
                                 return `
-                                    <div class="horizontal-item group">
+                                    <div class="grid-item group" data-src="${fullPath}">
                                         <img src="${fullPath}" 
                                              loading="lazy" 
-                                             class="group-hover:scale-105"
+                                             class="group-hover:scale-110"
+                                             onload="checkOrientation(this)"
                                              onclick="openLightbox('${fullPath}')">
                                         
-                                        <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                                            <div class="flex justify-end space-x-2">
-                                                <button onclick="shareImage('${fullPath}', event)" class="bg-white/90 text-black p-2 rounded-full hover:bg-white transition-colors">
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 0 00-5.368-2.684z"></path></svg>
-                                                </button>
-                                                <a href="${fullPath}" download target="_blank" class="bg-white/90 text-black p-2 rounded-full hover:bg-white transition-colors" onclick="event.stopPropagation()">
-                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                                </a>
-                                            </div>
+                                        <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-end p-3">
+                                            <span class="text-white text-[8px] uppercase tracking-widest font-bold">Ver foto</span>
                                         </div>
                                     </div>
                                 `;
@@ -271,18 +255,14 @@
                 container.innerHTML += sectionHtml;
             });
 
-            window.shareSection = (id) => {
-                const url = `${window.location.origin}${window.location.pathname}#${id}`;
-                navigator.clipboard.writeText(url);
-                alert('Enlace de sección copiado');
+            // Función para detectar si la imagen es horizontal y aplicar el span de 2 columnas
+            window.checkOrientation = (img) => {
+                if (img.naturalWidth > img.naturalHeight) {
+                    img.parentElement.classList.add('is-horizontal');
+                }
             };
 
-            window.shareImage = (path, e) => {
-                e.stopPropagation();
-                navigator.clipboard.writeText(path);
-                alert('Enlace de la imagen copiado');
-            };
-
+            // Lógica de Lightbox
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
             let currentIndex = 0;
@@ -299,13 +279,27 @@
                 setTimeout(() => {
                     lbImg.src = allImagesData[currentIndex];
                     lbImg.onload = () => lbImg.classList.remove('opacity-0');
-                }, 200);
+                }, 150);
             };
 
-            document.getElementById('next-btn').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % allImagesData.length; updateLightbox(); };
-            document.getElementById('prev-btn').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length; updateLightbox(); };
-            window.closeLightbox = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+            document.getElementById('next-btn').onclick = (e) => { 
+                e.stopPropagation(); 
+                currentIndex = (currentIndex + 1) % allImagesData.length; 
+                updateLightbox(); 
+            };
+            
+            document.getElementById('prev-btn').onclick = (e) => { 
+                e.stopPropagation(); 
+                currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length; 
+                updateLightbox(); 
+            };
 
+            window.closeLightbox = () => { 
+                lb.classList.remove('open'); 
+                document.body.style.overflow = ''; 
+            };
+
+            // Animaciones al hacer scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
             }, { threshold: 0.05 });
