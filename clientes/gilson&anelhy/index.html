@@ -220,10 +220,10 @@
                                 const fullPath = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${photoName}`;
                                 allImagesData.push(fullPath);
                                 return `
-                                    <div class="horizontal-item relative group overflow-hidden bg-gray-100 min-h-[200px]">
+                                    <div class="horizontal-item group">
                                         <img src="${fullPath}" 
                                              loading="lazy" 
-                                             class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-zoom-in"
+                                             class="group-hover:scale-105"
                                              onclick="openLightbox('${fullPath}')">
                                         
                                         <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
