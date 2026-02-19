@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Título Personalizado (Se cambiará con JS) -->
     <title>Álbum Virtual | Efraín Fotografía</title>
-    <meta name="robots" content="noindex, nofollow"> <!-- Recomendado para privacidad de clientes -->
+    <meta name="robots" content="noindex, nofollow">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="../../images/logo.svg">
@@ -48,7 +47,6 @@
         
         .fade-in-section.is-visible { opacity: 1; transform: none; }
 
-        /* Masonry Layout para la galería */
         .masonry-grid {
             column-count: 1;
             column-gap: 1rem;
@@ -56,13 +54,11 @@
         @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
         @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
 
-        /* Evitar que las fotos se corten entre columnas */
         .masonry-item {
             break-inside: avoid;
             margin-bottom: 1rem;
         }
 
-        /* Estilo de botones sobre la imagen */
         .image-overlay {
             background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
         }
@@ -74,7 +70,6 @@
         }
         #lightbox.open { display: flex; opacity: 1; }
 
-        /* Animación botón WhatsApp */
         @keyframes subtle-bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
@@ -86,7 +81,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Navegación (Igual que la principal, rutas ajustadas con ../../) -->
+    <!-- Navegación -->
     <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm transition-all duration-300 border-b border-gray-100" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-charcoal">
             <a href="../../index.html" class="font-serif text-2xl tracking-[0.2em] font-bold uppercase">Efraín</a>
@@ -97,42 +92,32 @@
         </div>
     </nav>
 
-    <!-- Hero Section Personalizado -->
+    <!-- Hero Section -->
     <header class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <!-- La imagen de fondo se cargará vía JS -->
             <img id="hero-bg" src="" class="w-full h-full object-cover filter grayscale brightness-[0.35]">
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
         
         <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto fade-in-section is-visible">
             <p class="text-sm md:text-base tracking-[0.3em] uppercase mb-4">Álbum Virtual de Fotos</p>
-            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 leading-tight">
-                <!-- Nombres cargados vía JS -->
-            </h1>
-            <p id="wedding-date" class="font-light text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-200">
-                <!-- Fecha cargada vía JS -->
-            </p>
+            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl lg:text-8xl mb-6 leading-tight"></h1>
+            <p id="wedding-date" class="font-light text-lg md:text-xl mb-10 max-w-2xl mx-auto text-gray-200"></p>
             <a href="#galeria-inicio" class="inline-block border border-white px-8 py-4 text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">
                 Ver Álbum
             </a>
         </div>
     </header>
 
-    <!-- Contenedor Principal de Galerías -->
+    <!-- Contenedor Principal -->
     <div id="galeria-inicio" class="bg-off-white pb-24">
-        <!-- Aquí se inyectarán las secciones automáticamente -->
         <div id="gallery-wrapper" class="max-w-7xl mx-auto px-4"></div>
     </div>
 
-    <!-- Footer (Igual que la principal) -->
+    <!-- Footer -->
     <footer class="bg-charcoal text-white py-12">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h4 class="font-serif text-2xl tracking-wider mb-8">Efraín Balceda</h4>
-            <div class="flex justify-center space-x-8 mb-8">
-                <a href="#" class="hover:opacity-50 transition-opacity uppercase text-[10px] tracking-widest">Instagram</a>
-                <a href="#" class="hover:opacity-50 transition-opacity uppercase text-[10px] tracking-widest">Facebook</a>
-            </div>
             <p class="text-[10px] text-gray-500 uppercase tracking-widest">© 2026 Efraín Balceda — Lima, Perú</p>
         </div>
     </footer>
@@ -140,13 +125,11 @@
     <!-- WhatsApp Widget -->
     <div id="whatsapp-widget" class="fixed bottom-8 right-8 z-[60]">
         <button onclick="window.open('https://wa.me/51955073778', '_blank')" class="whatsapp-float-btn bg-black text-white p-4 rounded-full shadow-2xl hover:bg-gray-800 transition-all duration-300 flex items-center justify-center relative">
-            <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
+            <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </button>
     </div>
 
-    <!-- Lightbox (Igual que la principal) -->
+    <!-- Lightbox -->
     <div id="lightbox" class="fixed inset-0 z-[70] bg-black/95 items-center justify-center p-4">
         <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white z-[80] transition-colors p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -163,252 +146,93 @@
     </div>
 
     <script>
-        // ==========================================
-        //  1. CONFIGURACIÓN DEL MATRIMONIO (EDITAR AQUI)
-        // ==========================================
+        // ============================================================
+        //  1. CONFIGURACIÓN R2 (EDITAR SOLO ESTO PARA NUEVOS CLIENTES)
+        // ============================================================
+        
+        // El subdominio que configuraste en Cloudflare R2 para tu Bucket
+        const R2_URL = "https://cdn.tusitio.com.pe"; 
+        const CLIENTE_PATH = "/bodas/2026/gilson"; // Carpeta dentro de R2
+
         const weddingConfig = {
-            names: "Gilson & Anelhy",
-            date: "19 de Enero de 2026",
-            coverImage: "images/portada.webp", // Debe estar en la carpeta images/ de este cliente
+            names: "Ana & Marcos",
+            date: "14 de Febrero, 2024",
+            coverImage: `${R2_URL}/${CLIENTE_PATH}/portada.jpg`,
             sections: [
                 {
                     id: "salon",
                     title: "Consejo Matrimonial",
-                    folder: "salon",
-                    photos: ["https://pub-1e88e871f6b34ca1a816bdda553f3da6.r2.dev/2026/gilson/salon/gilson-sr-001.jpg",
-                              "gilson-sr-002.jpg",
-                              "gilson-sr-003.jpg",
-                              "gilson-sr-004.jpg",
-                              "gilson-sr-005.jpg",
-                              "gilson-sr-006.jpg",
-                              "gilson-sr-007.jpg",
-                              "gilson-sr-008.jpg",
-                              "gilson-sr-009.jpg",
-                              "gilson-sr-010.jpg",
-                              "gilson-sr-011.jpg",
-                              "gilson-sr-012.jpg",
-                              "gilson-sr-013.jpg",
-                              "gilson-sr-014.jpg",
-                              "gilson-sr-015.jpg",
-                              "gilson-sr-016.jpg",
-                              "gilson-sr-017.jpg",
-                              "gilson-sr-018.jpg",
-                              "gilson-sr-019.jpg",
-                              "gilson-sr-020.jpg",
-                              "gilson-sr-021.jpg",
-                              "gilson-sr-022.jpg",
-                              "gilson-sr-023.jpg",
-                              "gilson-sr-024.jpg",
-                              "gilson-sr-025.jpg",
-                              "gilson-sr-026.jpg",
-                              "gilson-sr-027.jpg",
-                              "gilson-sr-028.jpg",
-                              "gilson-sr-029.jpg",
-                              "gilson-sr-030.jpg",
-                              "gilson-sr-031.jpg",
-                              "gilson-sr-032.jpg",
-                              "gilson-sr-033.jpg",
-                              "gilson-sr-034.jpg",
-                              "gilson-sr-035.jpg",
-                              "gilson-sr-036.jpg",
-                              "gilson-sr-037.jpg",
-                              "gilson-sr-038.jpg",
-                              "gilson-sr-039.jpg",
-                              "gilson-sr-040.jpg",
-                              "gilson-sr-041.jpg",
-                              "gilson-sr-042.jpg",
-                              "gilson-sr-043.jpg",
-                              "gilson-sr-044.jpg",
-                              "gilson-sr-045.jpg",
-                              "gilson-sr-046.jpg",
-                              "gilson-sr-047.jpg",
-                              "gilson-sr-048.jpg",
-                              "gilson-sr-049.jpg",
-                              "gilson-sr-050.jpg",
-                              "gilson-sr-051.jpg",
-                              "gilson-sr-052.jpg",
-                              "gilson-sr-053.jpg",
-                              "gilson-sr-054.jpg",
-                              "gilson-sr-055.jpg",
-                              "gilson-sr-056.jpg",
-                              "gilson-sr-057.jpg",
-                              "gilson-sr-058.jpg",
-                              "gilson-sr-059.jpg",
-                              "gilson-sr-060.jpg",
-                              "gilson-sr-061.jpg",
-                              "gilson-sr-062.jpg",
-                              "gilson-sr-063.jpg",
-                              "gilson-sr-064.jpg",
-                              "gilson-sr-065.jpg",
-                              "gilson-sr-066.jpg",
-                              "gilson-sr-067.jpg",
-                              "gilson-sr-068.jpg",
-                              "gilson-sr-069.jpg",
-                              "gilson-sr-070.jpg",
-                              "gilson-sr-071.jpg",
-                              "gilson-sr-072.jpg",
-                              "gilson-sr-073.jpg",
-                              "gilson-sr-074.jpg",
-                              "gilson-sr-075.jpg",
-                              "gilson-sr-076.jpg",
-                              "gilson-sr-077.jpg",
-                              "gilson-sr-078.jpg",
-                              "gilson-sr-079.jpg",
-                              "gilson-sr-080.jpg",
-                              "gilson-sr-081.jpg",
-                              "gilson-sr-082.jpg",
-                              "gilson-sr-083.jpg",
-                              "gilson-sr-084.jpg",
-                              "gilson-sr-085.jpg",
-                              "gilson-sr-086.jpg",
-                              "gilson-sr-087.jpg",
-                              "gilson-sr-088.jpg",
-                              "gilson-sr-089.jpg",
-                              "gilson-sr-090.jpg",
-                              "gilson-sr-091.jpg",
-                              "gilson-sr-092.jpg",
-                              "gilson-sr-093.jpg",
-                              "gilson-sr-094.jpg",
-                              "gilson-sr-095.jpg",
-                              "gilson-sr-096.jpg",
-                              "gilson-sr-097.jpg",
-                              "gilson-sr-098.jpg",
-                              "gilson-sr-099.jpg",
-                              "gilson-sr-100.jpg",
-                              "gilson-sr-101.jpg",
-                              "gilson-sr-102.jpg",
-                              "gilson-sr-103.jpg",
-                              "gilson-sr-104.jpg",
-                              "gilson-sr-105.jpg",
-                              "gilson-sr-106.jpg",
-                              "gilson-sr-107.jpg",
-                              "gilson-sr-108.jpg",
-                              "gilson-sr-109.jpg",
-                              "gilson-sr-110.jpg",
-                              "gilson-sr-111.jpg",
-                              "gilson-sr-112.jpg",
-                              "gilson-sr-113.jpg",
-                              "gilson-sr-114.jpg",
-                              "gilson-sr-115.jpg",
-                              "gilson-sr-116.jpg",
-                              "gilson-sr-117.jpg",
-                              "gilson-sr-118.jpg",
-                              "gilson-sr-119.jpg",
-                              "gilson-sr-120.jpg",
-                              "gilson-sr-121.jpg",
-                              "gilson-sr-122.jpg",
-                              "gilson-sr-123.jpg",
-                              "gilson-sr-124.jpg",
-                              "gilson-sr-125.jpg",
-                              "gilson-sr-126.jpg",
-                              "gilson-sr-127.jpg",
-                              "gilson-sr-128.jpg",
-                              "gilson-sr-129.jpg",
-                              "gilson-sr-130.jpg",
-                              "gilson-sr-131.jpg",
-                              "gilson-sr-132.jpg",
-                              "gilson-sr-133.jpg",
-                              "gilson-sr-134.jpg",
-                              "gilson-sr-135.jpg",
-                              "gilson-sr-136.jpg",
-                              "gilson-sr-137.jpg",
-                              "gilson-sr-138.jpg",
-                              "gilson-sr-139.jpg",
-                              "gilson-sr-140.jpg",
-                              "gilson-sr-141.jpg",
-                              "gilson-sr-142.jpg",
-                              "gilson-sr-143.jpg",
-                              "gilson-sr-144.jpg",
-                              "gilson-sr-145.jpg",
-                              "gilson-sr-146.jpg",
-                              "gilson-sr-147.jpg",
-                              "gilson-sr-148.jpg",
-                              "gilson-sr-149.jpg",
-                              "gilson-sr-150.jpg",
-                              "gilson-sr-151.jpg",
-                              "gilson-sr-152.jpg",
-                              "gilson-sr-153.jpg",
-                              "gilson-sr-154.jpg",
-                              "gilson-sr-155.jpg",
-                              "gilson-sr-156.jpg",
-                              "gilson-sr-157.jpg",
-                              "gilson-sr-158.jpg",
-                              "gilson-sr-159.jpg",
-                              "gilson-sr-160.jpg",
-                              "gilson-sr-161.jpg",
-                              "gilson-sr-162.jpg",
-                              "gilson-sr-163.jpg",
-                              "gilson-sr-164.jpg",
-                              "gilson-sr-165.jpg",
-                              "gilson-sr-166.jpg",
-                              "gilson-sr-167.jpg"
-                            ]
-
+                    photoPrefix: "gilson-sr-", // Las fotos se llaman civil-1.jpg, civil-2.jpg...
+                    count: 167,           // Número total de fotos en esta sección
+                    format: "jpg"
+                },
+                {
+                    id: "sesion",
+                    title: "Sesión: Paseo Nubcial",
+                    photoPrefix: "gilson-sesion-",
+                    count: 19,
+                    format: "jpg"
                 },
                 {
                     id: "recepcion",
-                    title: "Recepción",
-                    folder: "recepcion",
-                    photos: ["f1.jpg", "f2.jpg", "f3.jpg"]
+                    title: "Recepción y Fiesta",
+                    photoPrefix: "gilson-recepcion-",
+                    count: 384,
+                    format: "jpg"
                 }
             ]
         };
 
         // ==========================================
-        //  2. LÓGICA AUTOMÁTICA (NO TOCAR)
+        //  2. LÓGICA DE CARGA MASIVA
         // ==========================================
         
         document.addEventListener('DOMContentLoaded', () => {
-            // A. Cargar Datos del Hero
             document.getElementById('couple-name').innerText = weddingConfig.names;
             document.getElementById('wedding-date').innerText = weddingConfig.date;
             document.getElementById('hero-bg').src = weddingConfig.coverImage;
             document.title = `${weddingConfig.names} | Álbum Virtual`;
 
-            // B. Generar Secciones y Fotos
             const container = document.getElementById('gallery-wrapper');
-            const allImagesData = []; // Para el lightbox global
+            const allImagesData = [];
 
             weddingConfig.sections.forEach(section => {
-                // Crear HTML de la sección
+                // Generar los nombres de archivos automáticamente basado en el conteo
+                const sectionPhotos = Array.from({ length: section.count }, (_, i) => `${section.photoPrefix}${i + 1}.${section.format}`);
+                
                 const sectionHtml = `
                     <div id="${section.id}" class="pt-24 fade-in-section">
                         <div class="flex justify-between items-end mb-12 border-b border-gray-200 pb-4">
                             <div>
-                                <span class="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">Capítulo</span>
+                                <span class="text-xs font-bold tracking-[0.2em] text-gray-400 uppercase">Sección</span>
                                 <h2 class="font-serif text-3xl md:text-4xl text-charcoal mt-2">${section.title}</h2>
+                                <p class="text-[10px] text-gray-400 uppercase mt-1">${section.count} fotografías</p>
                             </div>
                             <div class="flex space-x-4">
                                 <button onclick="shareSection('${section.id}')" class="text-xs uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                                    Compartir
+                                    Compartir Sección
                                 </button>
-                                <!-- Nota: Descargar todo requiere un zip, aquí simulamos o dirigimos a un link externo si lo tienes -->
-                                <a href="#" class="text-xs uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-2" title="Requiere archivo ZIP">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                    Descargar Todo
-                                </a>
                             </div>
                         </div>
                         
                         <div class="masonry-grid">
-                            ${section.photos.map(photoName => {
-                                const fullPath = `images/${section.folder}/${photoName}`;
-                                allImagesData.push(fullPath); // Agregar al pool del lightbox
+                            ${sectionPhotos.map(photoName => {
+                                const fullPath = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${photoName}`;
+                                allImagesData.push(fullPath);
                                 return `
-                                    <div class="masonry-item relative group overflow-hidden">
+                                    <div class="masonry-item relative group overflow-hidden bg-gray-100 min-h-[200px]">
                                         <img src="${fullPath}" 
+                                             loading="lazy" 
                                              class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105 cursor-zoom-in"
                                              onclick="openLightbox('${fullPath}')">
                                         
-                                        <!-- Overlay al pasar el ratón -->
-                                        <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                                            <div class="flex justify-end space-x-4">
-                                                <button onclick="shareImage('${fullPath}', event)" class="bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors" title="Copiar enlace">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                                        <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                            <div class="flex justify-end space-x-2">
+                                                <button onclick="shareImage('${fullPath}', event)" class="bg-white/90 text-black p-2 rounded-full hover:bg-white transition-colors">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
                                                 </button>
-                                                <a href="${fullPath}" download class="bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors" title="Descargar" onclick="event.stopPropagation()">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                                <a href="${fullPath}" download target="_blank" class="bg-white/90 text-black p-2 rounded-full hover:bg-white transition-colors" onclick="event.stopPropagation()">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                                 </a>
                                             </div>
                                         </div>
@@ -421,19 +245,19 @@
                 container.innerHTML += sectionHtml;
             });
 
-            // C. Funciones de Utilidad (Compartir)
+            // Funciones de Lightbox y Compartir
             window.shareSection = (id) => {
                 const url = `${window.location.origin}${window.location.pathname}#${id}`;
-                navigator.clipboard.writeText(url).then(() => alert('¡Enlace de la sección copiado!'));
+                navigator.clipboard.writeText(url);
+                alert('Enlace de sección copiado');
             };
 
             window.shareImage = (path, e) => {
                 e.stopPropagation();
-                const url = `${window.location.origin}/${window.location.pathname.split('/')[1]}/${window.location.pathname.split('/')[2]}/${path}`;
-                navigator.clipboard.writeText(url).then(() => alert('¡Enlace de la foto copiado!'));
+                navigator.clipboard.writeText(path);
+                alert('Enlace de la imagen copiado');
             };
 
-            // D. Lightbox Logic (Reutilizada y Adaptada)
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
             let currentIndex = 0;
@@ -446,40 +270,25 @@
             };
 
             const updateLightbox = () => {
-                lbImg.classList.add('opacity-0', 'scale-95');
+                lbImg.classList.add('opacity-0');
                 setTimeout(() => {
                     lbImg.src = allImagesData[currentIndex];
-                    lbImg.onload = () => {
-                        lbImg.classList.replace('opacity-0', 'opacity-100');
-                        lbImg.classList.replace('scale-95', 'scale-100');
-                    };
+                    lbImg.onload = () => lbImg.classList.remove('opacity-0');
                 }, 200);
             };
 
             document.getElementById('next-btn').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex + 1) % allImagesData.length; updateLightbox(); };
             document.getElementById('prev-btn').onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length; updateLightbox(); };
-            
-            window.closeLightbox = () => { 
-                lb.classList.remove('open'); 
-                document.body.style.overflow = '';
-            };
+            window.closeLightbox = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
 
-            document.addEventListener('keydown', (e) => {
-                if (!lb.classList.contains('open')) return;
-                if (e.key === 'ArrowRight') document.getElementById('next-btn').click();
-                if (e.key === 'ArrowLeft') document.getElementById('prev-btn').click();
-                if (e.key === 'Escape') closeLightbox();
-            });
-
-            // E. Observer para Fade In
+            // Intersection Observer para animar entrada
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-                });
-            }, { threshold: 0.1 });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
+            }, { threshold: 0.05 });
+            
             setTimeout(() => {
                 document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
-            }, 100); // Pequeño delay para asegurar que el DOM se generó
+            }, 500);
         });
     </script>
 </body>
