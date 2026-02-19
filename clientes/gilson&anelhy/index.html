@@ -174,8 +174,11 @@
                 {
                     id: "civil",
                     title: "Boda Civil",
-                    folder: "civil", // Nombre de la subcarpeta en images/
-                    photos: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"] // Lista los nombres de tus archivos
+                    folder: "civil",
+                    photos: Array.from(
+                        { length: 167 },
+                        (_, i) => `gilson-sr-${String(i + 1).padStart(3, "0")}.jpg`
+                    )
                 },
                 {
                     id: "recepcion",
