@@ -41,39 +41,43 @@
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            will-change: opacity, visibility;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
         }
         
-        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
 
         /* REJILLA ESTILO INSTAGRAM / SEMI-VERTICAL */
         .instagram-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
-            gap: 8px;
-            grid-auto-flow: dense; /* Rellena huecos si una foto ocupa 2 espacios */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            grid-auto-flow: dense;
         }
 
-        /* En móviles pasamos a 2 columnas para que no se vea muy pequeño */
+        @media (max-width: 1024px) {
+            .instagram-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .instagram-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 4px;
+                gap: 6px;
             }
         }
 
         .grid-item {
             position: relative;
-            aspect-ratio: 3 / 4; /* Proporción semi-vertical estándar */
+            aspect-ratio: 3 / 4; 
             overflow: hidden;
             background-color: #f3f3f3;
+            border-radius: 2px;
         }
 
-        /* Clase para fotos horizontales: ocupan 2 columnas */
+        /* Ocupa 2 columnas si es horizontal */
         .grid-item.is-horizontal {
             grid-column: span 2;
-            aspect-ratio: 3 / 2; /* Proporción horizontal equilibrada */
+            aspect-ratio: 16 / 10;
         }
 
         .grid-item img {
@@ -83,230 +87,218 @@
             cursor: zoom-in;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             display: block;
+            opacity: 0;
+            transition: opacity 0.4s ease-in;
+        }
+
+        .grid-item img.loaded {
+            opacity: 1;
         }
 
         .image-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
         }
 
         #lightbox {
             display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: rgba(0,0,0,0.95);
+            align-items: center;
+            justify-content: center;
         }
-        #lightbox.open { display: flex; opacity: 1; }
+        #lightbox.open { display: flex; }
 
-        @keyframes subtle-bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
         .whatsapp-float-btn {
-            animation: subtle-bounce 3s infinite ease-in-out;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body class="antialiased font-sans">
 
     <!-- Navegación -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm transition-all duration-300 border-b border-gray-100" id="navbar">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center text-charcoal">
-            <a href="../../index.html" class="font-serif text-2xl tracking-[0.2em] font-bold uppercase">Efraín</a>
-            <div class="hidden md:flex items-center space-x-8 text-[11px] tracking-[0.2em] uppercase font-light">
-                <a href="../../index.html#portfolio" class="hover:text-gray-400 transition-colors">Portafolio</a>
-                <a href="../../index.html#contacto" class="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-all duration-300 font-medium">Reserva ahora</a>
+            <a href="#" class="font-serif text-2xl tracking-[0.2em] font-bold uppercase">Efraín</a>
+            <div class="hidden md:flex items-center space-x-8 text-[11px] tracking-[0.2em] uppercase font-bold">
+                <a href="#galeria-inicio" class="hover:text-gray-400 transition-colors">Galería</a>
+                <a href="https://wa.me/51955073778" target="_blank" class="bg-black text-white px-6 py-3 hover:bg-gray-800 transition-all">Contacto</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+    <header class="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img id="hero-bg" src="" class="w-full h-full object-cover filter grayscale brightness-[0.4]">
-            <div class="absolute inset-0 bg-black/20"></div>
+            <img id="hero-bg" src="" class="w-full h-full object-cover brightness-[0.4]">
         </div>
         
-        <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto fade-in-section is-visible">
-            <p class="text-[10px] md:text-xs tracking-[0.4em] uppercase mb-4 font-bold">Galería Privada</p>
-            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl mb-6 leading-tight"></h1>
-            <p id="wedding-date" class="font-light text-base md:text-lg mb-10 tracking-[0.1em] text-gray-300"></p>
-            <a href="#galeria-inicio" class="inline-block border border-white/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all duration-300">
-                Explorar Álbum
-            </a>
+        <div class="relative z-10 text-center text-white px-4 fade-in-section is-visible">
+            <p class="text-[10px] tracking-[0.5em] uppercase mb-4 opacity-80">Wedding Gallery</p>
+            <h1 id="couple-name" class="font-serif text-5xl md:text-7xl mb-4 leading-tight">Cargando...</h1>
+            <p id="wedding-date" class="font-light text-sm md:text-base tracking-[0.2em] text-gray-300"></p>
         </div>
     </header>
 
     <!-- Contenedor Principal -->
-    <main id="galeria-inicio" class="bg-white pb-24">
-        <div id="gallery-wrapper" class="max-w-[1400px] mx-auto px-4 md:px-6"></div>
+    <main id="galeria-inicio" class="bg-white py-12">
+        <div id="gallery-wrapper" class="max-w-[1400px] mx-auto px-4 md:px-6">
+            <!-- Las secciones se inyectan aquí -->
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-charcoal text-white py-16">
+    <footer class="bg-charcoal text-white py-16 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="font-serif text-xl tracking-widest mb-4 italic">Efraín Balceda</p>
-            <p class="text-[9px] text-gray-500 uppercase tracking-[0.4em]">Capturando momentos inolvidables</p>
+            <p class="font-serif text-2xl tracking-widest mb-4">Efraín Balceda</p>
+            <p class="text-[9px] text-gray-500 uppercase tracking-[0.4em]">Fotografía Profesional</p>
             <div class="h-px w-12 bg-gray-800 mx-auto my-8"></div>
-            <p class="text-[9px] text-gray-600 uppercase tracking-widest">© 2026 Lima, Perú</p>
+            <p class="text-[9px] text-gray-600 uppercase tracking-widest">© 2026 — Lima, Perú</p>
         </div>
     </footer>
 
-    <!-- WhatsApp Widget -->
-    <div id="whatsapp-widget" class="fixed bottom-8 right-8 z-[60]">
-        <button onclick="window.open('https://wa.me/51955073778', '_blank')" class="whatsapp-float-btn bg-black text-white p-4 rounded-full shadow-2xl hover:bg-gray-800 transition-all duration-300 flex items-center justify-center">
+    <!-- WhatsApp -->
+    <div class="fixed bottom-8 right-8 z-[60]">
+        <a href="https://wa.me/51955073778" target="_blank" class="whatsapp-float-btn bg-[#25D366] text-white p-4 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </button>
+        </a>
     </div>
 
     <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 z-[70] bg-black/98 items-center justify-center p-2 md:p-10">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white z-[80] transition-colors p-2">
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <button id="prev-btn" class="absolute left-2 md:left-8 text-white/40 hover:text-white z-[80] transition-all p-4">
+        <button id="prev-btn" onclick="prevImg(event)" class="absolute left-4 text-white/40 hover:text-white p-4">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button id="next-btn" class="absolute right-2 md:right-8 text-white/40 hover:text-white z-[80] transition-all p-4">
+        <button id="next-btn" onclick="nextImg(event)" class="absolute right-4 text-white/40 hover:text-white p-4">
             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <div class="relative w-full h-full flex items-center justify-center" onclick="event.target === this && closeLightbox()">
-            <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain transition-all duration-300 scale-95 opacity-0">
+        <div class="max-w-7xl max-h-[90vh] p-4">
+            <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain shadow-2xl">
         </div>
     </div>
 
     <script>
-        // ============================================================
-        //  1. CONFIGURACIÓN R2
-        // ============================================================
+        // CONFIGURACIÓN (Verifica que R2_URL sea accesible)
         const R2_URL = "https://cdn.tusitio.com.pe"; 
         const CLIENTE_PATH = "bodas/2026/gilson"; 
 
         const weddingConfig = {
             names: "Gilson & Ana",
-            date: "Celebración 2026",
+            date: "FEBRERO 2026",
             coverImage: `${R2_URL}/${CLIENTE_PATH}/portada.jpg`,
             sections: [
-                {
-                    id: "salon",
-                    title: "Consejo Matrimonial",
-                    photoPrefix: "gilson-sr-",
-                    count: 167,
-                    format: "jpg"
-                },
-                {
-                    id: "sesion",
-                    title: "Sesión Nupcial",
-                    photoPrefix: "gilson-sesion-",
-                    count: 19,
-                    format: "jpg"
-                },
-                {
-                    id: "recepcion",
-                    title: "Fiesta y Recepción",
-                    photoPrefix: "gilson-recepcion-",
-                    count: 384,
-                    format: "jpg"
-                }
+                { id: "salon", title: "Consejo Matrimonial", prefix: "gilson-sr-", count: 167 },
+                { id: "sesion", title: "Sesión Nupcial", prefix: "gilson-sesion-", count: 19 },
+                { id: "recepcion", title: "Fiesta y Recepción", prefix: "gilson-recepcion-", count: 384 }
             ]
         };
 
-        // ==========================================
-        //  2. LÓGICA DE CARGA Y RENDERIZADO
-        // ==========================================
-        document.addEventListener('DOMContentLoaded', () => {
+        const allImagesData = [];
+        let currentIndex = 0;
+
+        // Iniciar carga
+        window.onload = () => {
+            renderGallery();
+            setupObservers();
+        };
+
+        function renderGallery() {
             document.getElementById('couple-name').innerText = weddingConfig.names;
             document.getElementById('wedding-date').innerText = weddingConfig.date;
             document.getElementById('hero-bg').src = weddingConfig.coverImage;
 
-            const container = document.getElementById('gallery-wrapper');
-            const allImagesData = [];
-
+            const wrapper = document.getElementById('gallery-wrapper');
+            
             weddingConfig.sections.forEach(section => {
-                const sectionPhotos = Array.from({ length: section.count }, (_, i) => `${section.photoPrefix}${i + 1}.${section.format}`);
+                const sectionEl = document.createElement('section');
+                sectionEl.id = section.id;
+                sectionEl.className = "pt-20 fade-in-section";
                 
-                const sectionHtml = `
-                    <div id="${section.id}" class="pt-24 fade-in-section">
-                        <div class="mb-10 text-center">
-                            <h2 class="font-serif text-3xl text-charcoal tracking-wide">${section.title}</h2>
-                            <div class="h-0.5 w-10 bg-black/10 mx-auto mt-4 mb-2"></div>
-                            <p class="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-bold">${section.count} capturas</p>
+                let photosHtml = "";
+                for (let i = 1; i <= section.count; i++) {
+                    const url = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${section.prefix}${i}.jpg`;
+                    allImagesData.push(url);
+                    photosHtml += `
+                        <div class="grid-item group" onclick="openLightbox('${url}')">
+                            <img src="${url}" 
+                                 loading="lazy" 
+                                 onload="onImgLoad(this)" 
+                                 onerror="this.parentElement.style.display='none'">
+                            <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                         </div>
-                        
-                        <div class="instagram-grid" id="grid-${section.id}">
-                            ${sectionPhotos.map(photoName => {
-                                const fullPath = `${R2_URL}/${CLIENTE_PATH}/${section.id}/${photoName}`;
-                                allImagesData.push(fullPath);
-                                return `
-                                    <div class="grid-item group" data-src="${fullPath}">
-                                        <img src="${fullPath}" 
-                                             loading="lazy" 
-                                             class="group-hover:scale-110"
-                                             onload="checkOrientation(this)"
-                                             onclick="openLightbox('${fullPath}')">
-                                        
-                                        <div class="absolute inset-0 image-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-end p-3">
-                                            <span class="text-white text-[8px] uppercase tracking-widest font-bold">Ver foto</span>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
+                    `;
+                }
+
+                sectionEl.innerHTML = `
+                    <div class="mb-12 text-center">
+                        <h2 class="font-serif text-3xl text-charcoal tracking-wide">${section.title}</h2>
+                        <div class="h-0.5 w-8 bg-black/10 mx-auto my-4"></div>
+                        <p class="text-[9px] text-gray-400 uppercase tracking-[0.3em] font-bold">${section.count} fotografías</p>
+                    </div>
+                    <div class="instagram-grid">
+                        ${photosHtml}
                     </div>
                 `;
-                container.innerHTML += sectionHtml;
+                wrapper.appendChild(sectionEl);
             });
+        }
 
-            // Función para detectar si la imagen es horizontal y aplicar el span de 2 columnas
-            window.checkOrientation = (img) => {
-                if (img.naturalWidth > img.naturalHeight) {
-                    img.parentElement.classList.add('is-horizontal');
-                }
-            };
+        // Lógica de orientación e imagen cargada
+        function onImgLoad(img) {
+            img.classList.add('loaded');
+            if (img.naturalWidth > img.naturalHeight) {
+                img.parentElement.classList.add('is-horizontal');
+            }
+        }
 
-            // Lógica de Lightbox
+        // Lightbox
+        function openLightbox(src) {
+            currentIndex = allImagesData.indexOf(src);
             const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
-            let currentIndex = 0;
+            lbImg.src = src;
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
 
-            window.openLightbox = (src) => {
-                currentIndex = allImagesData.indexOf(src);
-                updateLightbox();
-                lb.classList.add('open');
-                document.body.style.overflow = 'hidden';
-            };
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
 
-            const updateLightbox = () => {
-                lbImg.classList.add('opacity-0');
-                setTimeout(() => {
-                    lbImg.src = allImagesData[currentIndex];
-                    lbImg.onload = () => lbImg.classList.remove('opacity-0');
-                }, 150);
-            };
+        function nextImg(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % allImagesData.length;
+            document.getElementById('lightbox-img').src = allImagesData[currentIndex];
+        }
 
-            document.getElementById('next-btn').onclick = (e) => { 
-                e.stopPropagation(); 
-                currentIndex = (currentIndex + 1) % allImagesData.length; 
-                updateLightbox(); 
-            };
-            
-            document.getElementById('prev-btn').onclick = (e) => { 
-                e.stopPropagation(); 
-                currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length; 
-                updateLightbox(); 
-            };
+        function prevImg(e) {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + allImagesData.length) % allImagesData.length;
+            document.getElementById('lightbox-img').src = allImagesData[currentIndex];
+        }
 
-            window.closeLightbox = () => { 
-                lb.classList.remove('open'); 
-                document.body.style.overflow = ''; 
-            };
-
-            // Animaciones al hacer scroll
+        // Animaciones
+        function setupObservers() {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
-            }, { threshold: 0.05 });
-            
-            setTimeout(() => {
-                document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
-            }, 500);
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
+        }
+
+        // Teclado para lightbox
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('open')) return;
+            if (e.key === "ArrowRight") nextImg(e);
+            if (e.key === "ArrowLeft") prevImg(e);
+            if (e.key === "Escape") closeLightbox();
         });
     </script>
 </body>
