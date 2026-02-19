@@ -47,48 +47,49 @@
         
         .fade-in-section.is-visible { opacity: 1; transform: none; }
 
-        /* DISEÑO HORIZONTAL CORREGIDO PARA EVITAR DEFORMACIÓN */
+        /* DISEÑO HORIZONTAL MEJORADO PARA EVITAR DEFORMACIÓN */
         .horizontal-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
         }
 
         .horizontal-item {
-            height: 350px; /* Altura base de la fila */
-            flex-grow: 1;
-            flex-shrink: 1;
+            height: 320px; /* Altura fija para mantener la consistencia de la fila */
+            flex: 1 1 auto; /* Permite crecer pero mantiene base automática */
             position: relative;
             overflow: hidden;
-            /* El ancho mínimo evita que fotos verticales se vean muy pequeñas */
-            min-width: 150px;
+            background-color: #f3f3f3;
         }
 
-        /* En móviles, ajustamos la altura para que no queden muy grandes */
+        /* En móviles, ajustamos la altura */
         @media (max-width: 640px) {
             .horizontal-item {
-                height: 250px;
+                height: 220px;
+                flex: 1 1 45%; /* Dos columnas aproximadas en móvil */
             }
         }
 
         .horizontal-item img {
             width: 100%;
             height: 100%;
-            /* 'cover' es fundamental, pero 'flex-grow' lo estaba forzando. 
-               Al quitar flex-basis fijo, se soluciona la deformación */
+            /* 'cover' asegura que no se deforme (no se estire), 
+               sino que se recorte sutilmente si el contenedor cambia de forma */
             object-fit: cover; 
+            object-position: center;
             cursor: zoom-in;
-            transition: transform 0.7s ease;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: block;
         }
 
-        /* Este pseudoelemento ayuda a que la última fila no se estire de forma extraña */
+        /* Evita que la última fila se estire de forma desproporcionada */
         .horizontal-grid::after {
             content: "";
-            flex-grow: 999999999;
+            flex-grow: 10;
         }
 
         .image-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
         }
 
         #lightbox {
