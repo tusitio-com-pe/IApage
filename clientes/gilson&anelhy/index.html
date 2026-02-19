@@ -176,8 +176,12 @@
                     title: "Consejo Matrimonial",
                     folder: "salon",
                     photos: Array.from(
-                        { length: 167 },
-                        (_, i) => `gilson-sr-${String(i + 1).padStart(3, "0")}.jpg`
+                      { length: 167 },
+                      (_, i) => {
+                        const n = i + 1;
+                        const num = n < 10 ? `00${n}` : n < 100 ? `0${n}` : n;
+                        return `gilson-sr-${num}.jpg`;
+                      }
                     )
                 },
                 {
